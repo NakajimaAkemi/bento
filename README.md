@@ -2,7 +2,7 @@
 
 Original Repo by DBGroup @UNIMORE: https://github.com/dbmodena/bento
 
-Contributors: Bilel Arfaoui, Giovanni Malaguti, Marco Pirelli
+Credits: Bilel Arfaoui, Giovanni Malaguti, Marco Pirelli
 
 Original Datasets and Notebook: https://www.kaggle.com/code/sohamsave/accident-data-analysis/notebook
 
@@ -12,7 +12,7 @@ Original Datasets and Notebook: https://www.kaggle.com/code/sohamsave/accident-d
 
 ![Alt text](accidents_core_1_mem_7.png?raw=true "Title")
 
-## CORE STEP
+## CORE//STEP//PIPE
 
 ![Alt text](accidents_core_step_pipe_1_mem_7.png?raw=true "Title")
 
