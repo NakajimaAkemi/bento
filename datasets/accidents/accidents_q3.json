@@ -1,0 +1,474 @@
+{
+    "Input": [
+        {
+            "method": "load_dataset",
+            "input": {                
+                "nrows": 30000
+            },
+            "input_modin_ray": {
+                "sep": ",",
+                "dtype": "object",
+                "nrows":30000
+            },
+            "input_modin_dask": {
+                "sep": ",",
+                "dtype": "object",
+                "nrows":30000
+            },
+            "input_datatable": {
+                "max_nrows": 30000
+            },
+            "input_polars": {
+                "n_rows": 30000
+            },
+            "input_spark": {
+                "sep": ","
+            },
+            "input_vaex": {
+                "lazy": true
+            }
+        },
+        {
+            "method": "force_execution",
+            "input": {}
+        }
+    ],
+    "Data Transformation": [
+        {
+            "method": "join",
+            "input": {
+                "other": "vehicles_df",
+                "left_on": ["Accident_Index", "Vehicle_Reference"],
+                "right_on": ["Accident_Index", "Vehicle_Reference"],
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "vehicles_df=pd.read_csv('datasets/accidents/data/Vehicles0514.csv', nrows=30000)"
+                ]
+            },            
+            "input_modin_dask": {
+                "other": "vehicles",
+                "left_on": ["Accident_Index", "Vehicle_Reference"],
+                "right_on": ["Accident_Index", "Vehicle_Reference"],
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "import modin.pandas as mpd",
+                    
+                    "vehicles=pd.read_csv('datasets/accidents/data/Vehicles0514.csv',dtype='object', nrows=30000)",
+                    "vehicles=mpd.DataFrame(vehicles)"
+                ]
+            },
+            "input_modin_ray": {
+                "other":"vehicles",
+                "left_on": ["Accident_Index", "Vehicle_Reference"],
+                "right_on": ["Accident_Index", "Vehicle_Reference"],
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "import modin.pandas as mpd",
+                    
+                    "vehicles=pd.read_csv('datasets/accidents/data/Vehicles0514.csv',dtype='object', nrows=30000)",
+                    "vehicles=mpd.DataFrame(vehicles)"
+                ]
+            },
+            "input_datatable": {
+                "other": "vehicles_df",
+                "left_on": ["Accident_Index", "Vehicle_Reference"],
+                "right_on": ["Accident_Index", "Vehicle_Reference"],
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "vehicles_df=pd.read_csv('datasets/accidents/data/Vehicles0514.csv', nrows=30000)",
+                    "import datatable as dt",
+                    "vehicles_df=dt.Frame(vehicles_df)"                    
+                ]
+            },
+            "input_polars": {
+                "other": "vehicles_df",
+                "left_on": ["Accident_Index", "Vehicle_Reference"],
+                "right_on": ["Accident_Index", "Vehicle_Reference"],
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "vehicles_df=pd.read_csv('datasets/accidents/data/Vehicles0514.csv', nrows=30000)",
+                    "import polars as pl",
+                    "vehicles_df=pl.from_pandas(vehicles_df).lazy()"                    
+                ]
+            },
+            "input_spark": {
+                "other": "accident_df",
+                "left_on": [
+                    "Accident_Index"
+                ],
+                "right_on": [
+                    "Accident_Index"
+                ],
+                "how": "inner",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "from pyspark.sql import DataFrame, SparkSession",
+                    "sparkSession=SparkSession.builder.getOrCreate()",
+                    "accident_df = sparkSession.read.csv('datasets/accidents/data/Accidents0514.csv', header=True, inferSchema=True)",
+                    "accident_df.persist()"
+                ]
+            },
+            "input_pyspark_pandas": {
+                "other": "accident_df",
+                "left_on": [
+                    "Accident_Index"
+                ],
+                "right_on": [
+                    "Accident_Index"
+                ],
+                "how": "inner",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pyspark.pandas as pd",
+                    "accident_df = pd.read_csv('datasets/accidents/data/Accidents0514.csv')"
+                ]
+            },
+            "input_vaex": {
+                "other": "accident_df",
+                "left_on": 
+                    "Accident_Index",
+                
+                "right_on": 
+                    "Accident_Index"
+                ,
+                "how": "inner",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import vaex",
+                    "accident_df = vaex.read_csv('datasets/accidents/data/Accidents0514.csv')"
+                ]
+            }
+        },
+        {
+            "method": "join",
+            "input": {
+                "other": "accident_df",
+                "left_on": "Accident_Index",
+                "right_on": "Accident_Index",
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "accident_df=pd.read_csv('datasets/accidents/data/Accidents0514.csv', nrows=30000)"
+                ]
+            },
+            "input_modin_dask": {
+                "other": "accident_df",
+                "left_on": "Accident_Index",
+                "right_on": "Accident_Index",
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],             
+                "extra_commands": [
+                    "import pandas as pd",
+                    "import modin.pandas as mpd",
+                    "accident_df=pd.read_csv('datasets/accidents/data/Accidents0514.csv', nrows=30000, dtype='object')",
+                    "accident_df=mpd.DataFrame(accident_df)"
+                ]
+            },
+            "input_modin_ray": {
+                "other": "accident_df",
+                "left_on": "Accident_Index",
+                "right_on": "Accident_Index",
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "import modin.pandas as mpd",
+                    "accident_df=pd.read_csv('datasets/accidents/data/Accidents0514.csv', nrows=30000, dtype='object')",
+                    "accident_df=mpd.DataFrame(accident_df)"
+                ]
+            },
+            "input_datatable": {
+                "other": "accident_df",
+                "left_on": "Accident_Index",
+                "right_on": "Accident_Index",
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "accident_df=pd.read_csv('datasets/accidents/data/Accidents0514.csv', nrows=30000)",
+                    "import datatable as dt",
+                    "accident_df=dt.Frame(accident_df)"                    
+                ]
+            },
+            "input_polars": {
+                "other": "accident_df",
+                "left_on": "Accident_Index",
+                "right_on": "Accident_Index",
+                "how": "left",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pandas as pd",
+                    "accident_df=pd.read_csv('datasets/accidents/data/Accidents0514.csv', nrows=30000)",
+                    "import polars as pl",
+                    "accident_df=pl.from_pandas(accident_df).lazy()"                    
+                ]
+            },
+            "input_spark": {
+                "other": "vehicle_df",
+                "left_on": [
+                    "Accident_Index"
+                ],
+                "right_on": [
+                    "Accident_Index"
+                ],
+                "how": "inner",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "from pyspark.sql import DataFrame, SparkSession",
+                    "sparkSession=SparkSession.builder.getOrCreate()",
+                    "vehicle_df = sparkSession.read.csv('datasets/accidents/data/Vehicles0514.csv', header=True, inferSchema=True)",
+                    "vehicle_df.persist()"
+                ]
+            },
+            "input_pyspark_pandas": {
+                "other": "vehicle_df",
+                "left_on": [
+                    "Accident_Index"
+                ],
+                "right_on": [
+                    "Accident_Index"
+                ],
+                "how": "inner",
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import pyspark.pandas as pd",
+                    "vehicle_df = pd.read_csv('datasets/accidents/data/Vehicles0514.csv')"
+                ]
+            },
+            "input_vaex": {
+                "other": "vehicle_df",
+                "left_on": 
+                    "Accident_Index",
+                
+                "right_on": 
+                    "Accident_Index"
+                ,
+                "how": "inner",
+                "rprefix": "V_",
+                "allow_duplication": true,
+                "req_compile": [
+                    "other"
+                ],
+                "extra_commands": [
+                    "import vaex",
+                    "vehicle_df = vaex.read_csv('datasets/accidents/data/Vehicles0514.csv')"
+                ]
+            }
+        },        
+        {
+            "method": "delete_columns",
+            "input": {
+                "columns": ["LSOA_of_Accident_Location"]
+            }
+        },
+        {
+            "method": "calc_column",
+                "input": {
+                    "col_name": "Hour",
+                    "columns": ["Time"],
+                    "f": "lambda s: str(s.tolist())[2:4]"    
+                },
+                "input_polars": {
+                    "col_name": "Hour",
+                    "columns": ["Time"],
+                    "f": "lambda s: 'IS A SLICE' if type(s) == pl.DataFrame.slice else s['Time'][0:2]"
+                },
+                "input_vaex": {
+                    "col_name": "Hour",
+                    "columns": [ "Time"],
+                    "f": "lambda s: s[0:2]"    
+                },
+                "input_spark": {
+                    "col_name": "Hour",
+                    "columns": [ "Time"],
+                    "f": "lambda s: str(s)[11:13]"    
+                },
+                "input_pyspark_pandas": {
+                    "col_name": "Hour",
+                    "columns": [ "Time"],
+                    "f": "lambda s: str(s)[18:20]"   
+                }
+        },
+        {
+            "method": "loc",
+            "input": {
+                "column_list": [
+                    "Accident_Severity",
+                    "Light_Conditions",
+                    "Weather_Conditions",
+                    "Hour"
+                ],
+                "row_condition": "self.df_.Time != None"  
+            },
+            "input_polars": {
+                "column_list": [
+                    "Accident_Severity",
+                    "Light_Conditions",
+                    "Weather_Conditions",
+                    "Hour"
+                ],
+                "row_condition": "self.df_.select('Time') != None",                
+                "extra_commands": [
+                    "import polars as pl"
+                ]
+            },
+            "input_datatable": {
+                "column_list": [
+                    "Accident_Severity",
+                    "Light_Conditions",
+                    "Weather_Conditions",
+                    "Hour"
+                ],
+                "row_condition": "(dt.f.Time != None)"                
+            },
+            "input_modin_dask": {
+                "column_list": [
+                    "Accident_Severity",
+                    "Light_Conditions",
+                    "Weather_Conditions",
+                    "Hour"],
+                "row_condition": "(self.df_.Location_Easting_OSGR.notna()) & (self.df_.Location_Northing_OSGR.notna()) & (self.df_.Longitude.notna()) & (self.df_.Latitude.notna()) & (self.df_.Time!= None)"  
+            },
+            "input_modin_ray": {
+                "column_list": [
+                    "Accident_Severity",
+                    "Light_Conditions",
+                    "Weather_Conditions",
+                    "Hour"],
+                "row_condition": "(self.df_.Location_Easting_OSGR.notna()) & (self.df_.Location_Northing_OSGR.notna()) & (self.df_.Longitude.notna()) & (self.df_.Latitude.notna()) & (self.df_.Time!= None)" 
+            },
+            "input_spark":{
+                "column_list":["Accident_Severity","Light_Conditions","Weather_Conditions","Hour"]
+            },
+            "input_pyspark_pandas":{
+                "column_list":["Accident_Severity","Light_Conditions","Weather_Conditions","Hour"]
+            },
+            "input_vaex":{
+                "column_list":["Accident_Severity","Light_Conditions","Weather_Conditions","Hour"]
+            }
+        },
+        {
+            "method": "calc_column",
+            "input": {
+                "col_name": "Time_of_day",
+                "columns": [ 
+                    "Hour"
+                ],
+                "f": "lambda n: 'Early Morning' if int(n) in range(4, 8) else ('Morning' if int(n) in range(8, 12) else ('Afternoon' if int(n) in range(12, 17) else ('Evening' if int(n) in range(17, 20) else ('Night' if int(n) in range(20, 25) or int(n) == 0 else 'Late Night'))))"
+            },
+            "input_polars": {
+                "col_name": "Time_of_day",
+                "columns": [
+                    "Hour"
+                ],
+                "f": "lambda n: 'Early Morning' if int(n['Hour']) in range(4, 8) else ('Morning' if int(n['Hour']) in range(8, 12) else ('Afternoon' if int(n['Hour']) in range(12, 17) else ('Evening' if int(n['Hour']) in range(17, 20) else ('Night' if int(n['Hour']) in range(20, 25) or int(n['Hour']) == 0 else 'Late Night'))))"
+            },
+            "input_modin_dask": {
+                "col_name": "Time_of_day",
+                "columns": [ 
+                    "Hour"
+                ],
+                "f": "lambda n: 'Early Morning' if int(n) in range(4, 8) else ('Morning' if int(n) in range(8, 12) else ('Afternoon' if int(n) in range(12, 17) else ('Evening' if int(n) in range(17, 20) else ('Night' if int(n) in range(20, 25) or int(n) == 0 else 'Late Night'))))"
+                },
+            "input_modin_ray": {
+                "col_name": "Time_of_day",
+                "columns": [ 
+                    "Hour"
+                ],
+                "f": "lambda n: 'Early Morning' if int(n) in range(4, 8) else ('Morning' if int(n) in range(8, 12) else ('Afternoon' if int(n) in range(12, 17) else ('Evening' if int(n) in range(17, 20) else ('Night' if int(n) in range(20, 25) or int(n) == 0 else 'Late Night'))))"
+            }
+        },
+        {
+            "method": "force_execution",
+            "input": {}
+        }
+    ],
+    "Data Cleaning": [
+        
+    ],    
+    "EDA": [
+        {
+            "method": "query",
+            "input": {
+                "inplace": true,
+                "query": "Weather_Conditions != -1"
+            },
+            "input_datatable": {
+                "inplace": true,
+                "query": "(dt.f.Weather_Conditions != -1)"
+            },
+            "input_polars": {
+                "inplace": true,
+                "query": "pl.col('Weather_Conditions') > 0",
+                "req_compile": [
+                    "query"
+                ],
+                "extra_commands": [
+                    "import polars as pl"
+                ]
+            },
+            "input_modin_dask": {
+                "query": "Weather_Conditions != '-1'"
+            },            
+            "input_modin_ray":{
+                "query": "Weather_Conditions != '-1'"
+            }
+        },
+        {
+            "method": "force_execution",
+            "input": {}
+        }
+    ],
+    "Output": [
+        {
+            "method": "to_csv",
+            "input": {
+                "extra_commands": [
+                    "import os",
+                    "if not os.path.exists('pipeline_output'): os.makedirs('pipeline_output')"
+                ]
+            }
+        }
+    ]
+}
