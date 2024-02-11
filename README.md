@@ -1,9 +1,13 @@
-#Big Data Management Project
+# Big Data Management Project 
+
 Original Repo:  by DBGroup @UNIMORE
+
 Credit: Bilel Arfaoui, Giovanni Malaguti, Marco
+
 ![Alt text](accidents_core_1_mem_7.png?raw=true "Title")
 ![Alt text](accidents_core_step_pipe_1_mem_7.png?raw=true "Title")
 ![Alt text](accidents_step_1_mem_7.png?raw=true "Title")
+
 # 🍱 Dataframes Evaluation Tool
 The aim of this tool is to compare several frameworks who manage DataFrames on common operations of data preparation.
 
